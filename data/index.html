@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Turn PC on/off</title>
+    <link href='main.css' rel='stylesheet' type='text/css'>
+    <link rel="icon" type="image/png" sizes="144x144" href="/favicon-144x144.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#00878f">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
+    <script src="WebSocket.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <center>
+        <header>
+            <h1 id='connectionStatus'>Status: <b style='color: gray'>Connecting...</b></h1> <!-- ver 2 -->
+
+        </header>
+
+        <div id="settings">
+            <table>
+                <tr>
+                    <td>
+                        <header id="modeHeader">
+                            <h1><button id='DEL' class="button">DEL</button></h1>
+                            <h1><button id='CTRL' class="button">CTRL</button></h1>
+                            <h1><input type="text"></input></h1>
+                        </header>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </center>
+</body>
+<script>
+
+    // power button press
+    document.getElementById('power').addEventListener("click", powerButtonHandler);
+
+</script>
+
+</html>

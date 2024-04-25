@@ -9,8 +9,6 @@
 #include "main.h"
 #include <arduino-timer.h>
 
-// #define RAPORT_WIFI_STATUS
-
 void setup()
 {
   // powerButtonPin HIGH - button not pressed, LOW - pressed
