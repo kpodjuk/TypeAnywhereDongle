@@ -58,6 +58,7 @@ bool handleFileRead(String path);
 void handleNotFound();
 String getContentType(String filename);
 void raportStatusOnSerial();
+void parseAndPressKey(String key);
 // WL_NO_SHIELD        = 255,   // for compatibility with WiFi Shield library
 // WL_IDLE_STATUS      = 0,
 // WL_NO_SSID_AVAIL    = 1,

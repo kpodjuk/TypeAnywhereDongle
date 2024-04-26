@@ -8,11 +8,12 @@
 #include "ArduinoJson.h"
 #include "main.h"
 #include <arduino-timer.h>
-
+#include "keyboardCodes.h"
 // #define RAPORT_WIFI_STATUS
 
 void setup()
 {
+  pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(115200); // Start the Serial communication to send messages to the computer
   delay(10);
   Serial.println("\r\n");
@@ -200,8 +201,9 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t lenght)
       Serial.print(F("Keypress msg arrived: "));
       String keyPressed = jsonDoc["keyPressed"];
       Serial.println(keyPressed);
-      // digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
-      digitalWrite(LED_BUILTIN, HIGH);
+      // blink LED to acknowledge
+      digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+      parseAndPressKey(keyPressed);
     }
     else if (jsonDoc["type"] == "someotherthing")
     {
@@ -210,6 +212,50 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t lenght)
 
     break;
   }
+}
+
+// dummy keyboard obj, so it compiles
+class KeyboardDummy
+{
+public:
+  void press(uint32_t keyCode)
+  {
+  }
+};
+KeyboardDummy Keyboard;
+
+void parseAndPressKey(String key)
+{
+  // assign keycode to the string that arrived and send to pc
+  // only has to be done for special keys like ctrl/alt
+  if (key == "Ctrl")
+    Keyboard.press(KEY_LEFT_CTRL);
+  else if (key == "Alt")
+    Keyboard.press(KEY_LEFT_ALT);
+  else if (key == "<i class=\"fa-brands fa-windows\"></i>")
+    Keyboard.press(KEY_LEFT_GUI);
+  else if (key == "Shift")
+    Keyboard.press(KEY_LEFT_SHIFT);
+  else if (key == "Enter")
+    Keyboard.press(KEY_RETURN);
+  else if (key == "Back")
+    Keyboard.press(KEY_BACKSPACE);
+  else if (key == "") // space
+    Keyboard.press(' ');
+  else if (key == "Caps Lock")
+    Keyboard.press(KEY_CAPS_LOCK);
+  else if (key == "Tab")
+    Keyboard.press(KEY_TAB);
+  else if (key == "↑")
+    Keyboard.press(KEY_UP_ARROW);
+  else if (key == "↓")
+    Keyboard.press(KEY_DOWN_ARROW);
+  else if (key == "←")
+    Keyboard.press(KEY_LEFT_ARROW);
+  else if (key == "→")
+    Keyboard.press(KEY_RIGHT_ARROW);
+  else if (key == "Del")
+    Keyboard.press(KEY_DELETE);
 }
 
 String formatBytes(size_t bytes)
